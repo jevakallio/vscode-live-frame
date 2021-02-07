@@ -5,7 +5,7 @@
   "repository": "https://github.com/jevakallio/vscode-live-frame",
   "description": "Live preview your web application inside VS Code",
   "icon": "docs/icon-128.png",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.47.0"
   },
