@@ -1,6 +1,8 @@
-# VS Code Live Frame
-
-_Run your web application **inside** [VS Code](https://code.visualstudio.com/)._
+<p align="center"><img src="https://github.com/jevakallio/vscode-live-frame/blob/master/docs/icon-400.png?raw=true" width=200></p>
+<h1 align="center">VS Code Live Frame</h1>
+<p align="center">
+<strong>Run your web application <i>inside</i> VS Code.</strong>
+<br><br>
 
 ## Why would you want to do that?
 
