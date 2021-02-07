@@ -94,6 +94,8 @@ if (window.parent !== window) {
 }
 ```
 
+If you can think of a better solution (to fix the keyboard issue, or that doesn't involve using an iframe at all), see [Contributing](#contributing).
+
 ## Infrequently Asked Questions
 
 ### Which bundlers, dev servers etc. does Live Frame support?
@@ -121,6 +123,14 @@ Add workaround for keyboard binding issue.
 ### 0.1.0
 
 Initial release.
+
+## Contributing
+
+Pull requests are welcome! For anything that significantly grows the scope of this project or complicates its maintenance, please open an issue to discuss first.
+
+### Local development
+
+Install dependencies with `yarn`, and run the project with `Run > Start Debugging` from within VS Code.
 
 ## License
 
