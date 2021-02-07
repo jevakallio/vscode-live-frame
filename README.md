@@ -1,14 +1,14 @@
 # VS Code Live Frame
 
-_Run your web application inside VS Code._
+_Run your web application **inside** [VS Code](https://code.visualstudio.com/)._
 
-## Use Case
+## Why would you want to do that?
 
 You're developing a web application. Instead of switching between your editor and the running app, you can render your web application inside VS Code using **Live Frame**.
 
-![Demo](docs/example.png)
+Assuming you've got a live/hot reloading setup (livereload, webpack, vite, servor... doesn't matter which), the site reloads like in a regular browser.
 
-As long as you've got some kind of live/hot reloading setup (livereload, webpack, vite, servor... doesn't matter which), the site reloads like in a regular browser.
+![Demo](docs/example.png)
 
 ## How to use it
 
@@ -42,9 +42,7 @@ Yes, run (`Cmd`+`Shift`+`P`) the `Open WebView Developer Tools` command.
 
 ### Wait, didn't this exist before?
 
-Sort of. [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) embeds a headless Chrome, which is awesome, but also very resource intensive and kept crashing my VS Code.
-
-Then there are about a dozen extensions that live reload HTML in various ways, but let's face it, you have your own HMR setup already.
+Sort of. [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) embeds a headless Chrome, which is awesome, but also very resource intensive and kept crashing my VS Code. Then there are about a dozen extensions that live reload HTML in various ways, but if you're working with a web application with a build step, they're no use.
 
 **Live Frame** takes a simple but lightweight route and uses a VS Code Webview pane, and inside it renders your app in a full-screen `iframe`. You can see the full implementation in [extension.ts](src/extension.ts).
 
@@ -66,4 +64,4 @@ Initial release.
 
 ## License
 
-MIT
+[MIT](LICENSE)
