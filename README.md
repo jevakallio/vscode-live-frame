@@ -4,9 +4,9 @@ _Run your web application **inside** [VS Code](https://code.visualstudio.com/)._
 
 ## Why would you want to do that?
 
-You're developing a web application, and you've got some kind of live/hot reloading setup. Instead of switching between your editor and a browser, you can see your changes without leaving VS Code.
+You're developing a web application, and you've got some kind of a live/hot reloading setup. Instead of switching between your editor and a browser, with **Live Frame** you can see your changes without leaving VS Code.
 
-Or perhaps you're streaming or recording a screen cast, and you want everything nicely in one window. Whatever your reasons, we're not here to judge.
+Or, perhaps, you're streaming or recording a screen cast, and you just want everything nicely in one window. Whatever your reasons, we're not here to judge.
 
 ![Demo](docs/demo.gif)
 
@@ -34,7 +34,7 @@ Add the following to your User or Workspace settings. Given that your app's deve
 }
 ```
 
-If you have a really fast hot reloading setup (like [vite]), turn on VS Code's Auto Save on a short delay when you need an extra blazing feedback loop,
+If you have a fast hot reloading setup, you can turn on VS Code's **Auto Save** on a short delay when you need an extra blazing feedback loop.
 
 ```js
 {
