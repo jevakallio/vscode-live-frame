@@ -4,9 +4,9 @@ _Run your web application **inside** [VS Code](https://code.visualstudio.com/)._
 
 ## Why would you want to do that?
 
-You're developing a web application. Instead of switching between your editor and the running app, you can render your web application inside VS Code using **Live Frame**.
+You're developing a web application, and you've got some kind of live/hot reloading setup. Instead of switching between your editor and a browser, you can see your changes without leaving VS Code.
 
-Assuming you've got a live/hot reloading setup (livereload, webpack, vite, servor... doesn't matter which), the site reloads like in a regular browser.
+Or perhaps you're streaming or recording a screen cast, and you want everything nicely in one window. Whatever your reasons, we're not here to judge.
 
 ![Demo](docs/example.png)
 
@@ -34,7 +34,20 @@ Add the following to your User or Workspace settings. Given that your app's deve
 }
 ```
 
+If you have a really fast hot reloading setup (like [vite]), turn on VS Code's Auto Save on a short delay when you need an extra blazing feedback loop,
+
+```js
+{
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 50,
+}
+```
+
 ## Questions
+
+### Which bundlers, dev servers etc. does Live Frame support?
+
+All of them. Livereload, webpack, vite, servor, whatever angular people use... doesn't matter.
 
 ### Can I use browser dev tools?
 
