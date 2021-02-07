@@ -1,65 +1,69 @@
-# vscode-live-frame README
+# VS Code Live Frame
 
-This is the README for your extension "vscode-live-frame". After writing up a brief description, we recommend including the following sections.
+_Run your web application inside VS Code._
 
-## Features
+## Use Case
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+You're developing a web application. Instead of switching between your editor and the running app, you can render your web application inside VS Code using **Live Frame**.
 
-For example if there is an image subfolder under your extension project workspace:
+![Demo](docs/example.png)
 
-\!\[feature X\]\(images/feature-x.png\)
+As long as you've got some kind of live/hot reloading setup (livereload, webpack, vite, servor... doesn't matter which), the site reloads like in a regular browser.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## How to use it
 
-## Requirements
+1. Install **Live Frame** from the VS Code Marketplace.
+2. Start your local development server
+3. Run (`Cmd`+`Shift`+`P`) command `Live Frame: Open`
+4. Follow [configuration instructions](#extension-settings).
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Extension Settings
 
-## Extension Settings
+Add the following to your User or Workspace settings. Given that your app's development URL is probably project specific, Workspace settings may make more sense.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+```js
+{
+  // Required: The website to display
+  "liveFrame.url": "http://localhost:3000",
 
-For example:
+  // Optional: Title for the pane tab heading
+  "liveFrame.title": "Local Development",
 
-This extension contributes the following settings:
+  // Optional: Which pane to open the frame in
+  "liveFrame.pane": "Beside"
+}
+```
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+## Questions
 
-## Known Issues
+### Can I use browser dev tools?
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Yes, run (`Cmd`+`Shift`+`P`) the `Open WebView Developer Tools` command.
+
+### Wait, didn't this exist before?
+
+Sort of. [Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) embeds a headless Chrome, which is awesome, but also very resource intensive and kept crashing my VS Code.
+
+Then there are about a dozen extensions that live reload HTML in various ways, but let's face it, you have your own HMR setup already.
+
+**Live Frame** takes a simple but lightweight route and uses a VS Code Webview pane, and inside it renders your app in a full-screen `iframe`. You can see the full implementation in [extension.ts](src/extension.ts).
+
+### So is this exactly like a regular Chrome environment?
+
+Not really. It's an embedded Electron webview, and I'm sure there are many minor differences to a full browser. Use at your own peril during development, not for acceptance testing!
+
+### What if my website doesn't work in an iframe?
+
+**If your website prevents itself being loaded in an iframe e.g. via `X-Frame-Options` or `Content-Security-Policy`, it won't work inside Live Frame.**
+
+In that case, try [VSCode Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) instead.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.1.0
 
-### 1.0.0
+Initial release.
 
-Initial release of ...
+## License
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+MIT
