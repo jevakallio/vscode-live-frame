@@ -1,27 +1,69 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
+import { renderHost, renderPlaceholder } from "./host";
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  let disposable = vscode.commands.registerCommand(
+    "vscode-live-frame.open",
+    () => {
+      const config = vscode.workspace.getConfiguration("liveFrame");
+      const url = config.get<string>("url");
+      const title = config.get<string>("title") || url || "Live Frame";
+      const pane = config.get<string>("pane");
+      const column = getColumn(pane);
+      const panel = vscode.window.createWebviewPanel(
+        "vscode-live-frame",
+        title,
+        column,
+        {
+          localResourceRoots: [],
+          enableScripts: true,
+        }
+      );
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "vscode-live-frame" is now active!');
+      vscode.workspace.onDidChangeConfiguration((e) => {
+        const newConfig = vscode.workspace.getConfiguration("liveFrame");
+        const newUrl = newConfig.get<string>("url");
+        const newTitle =
+          newConfig.get<string>("title") || newUrl || "Live Frame";
+        panel.webview.html = newUrl ? renderHost(newUrl) : renderPlaceholder();
+        panel.title = newTitle;
+      });
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('vscode-live-frame.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
+      panel.webview.html = url ? renderHost(url) : renderPlaceholder();
+    }
+  );
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from VSCode Live Frame!');
-	});
-
-	context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable);
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {}
+
+const getColumn = (pane: string | void): vscode.ViewColumn => {
+  switch (pane) {
+    case "Active":
+      return vscode.ViewColumn.Active;
+    case "Beside":
+      return vscode.ViewColumn.Beside;
+    case "One":
+      return vscode.ViewColumn.One;
+    case "Two":
+      return vscode.ViewColumn.Two;
+    case "Three":
+      return vscode.ViewColumn.Three;
+    case "Four":
+      return vscode.ViewColumn.Four;
+    case "Five":
+      return vscode.ViewColumn.Five;
+    case "Six":
+      return vscode.ViewColumn.Six;
+    case "Seven":
+      return vscode.ViewColumn.Seven;
+    case "Eight":
+      return vscode.ViewColumn.Eight;
+    case "Nine":
+      return vscode.ViewColumn.Nine;
+    default:
+      return vscode.ViewColumn.Beside;
+  }
+};
