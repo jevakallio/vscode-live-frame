@@ -14,10 +14,10 @@ Or, perhaps, you're streaming or recording a screen cast, and you just want ever
 
 ## How to use it
 
-1. Install **Live Frame** from the VS Code Marketplace.
+1. Install **Live Frame** from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=jevakallio.vscode-live-frame).
 2. Start your local development server
 3. Run (`Cmd`+`Shift`+`P`) command `Live Frame: Open`
-4. Follow [configuration instructions](#extension-settings).
+4. Follow the displayed [configuration instructions](#extension-settings).
 
 ### Extension Settings
 
