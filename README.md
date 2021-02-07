@@ -8,7 +8,7 @@ You're developing a web application, and you've got some kind of live/hot reload
 
 Or perhaps you're streaming or recording a screen cast, and you want everything nicely in one window. Whatever your reasons, we're not here to judge.
 
-![Demo](docs/example.png)
+![Demo](docs/demo.gif)
 
 ## How to use it
 
