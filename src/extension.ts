@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { renderHost, renderPlaceholder } from "./host";
+import { getColumnFromPane } from "./pane";
 
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
@@ -9,7 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
       const url = config.get<string>("url");
       const title = config.get<string>("title") || url || "Live Frame";
       const pane = config.get<string>("pane");
-      const column = getColumn(pane);
+      const column = getColumnFromPane(pane);
       const panel = vscode.window.createWebviewPanel(
         "vscode-live-frame",
         title,
@@ -38,32 +39,3 @@ export function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() {}
-
-const getColumn = (pane: string | void): vscode.ViewColumn => {
-  switch (pane) {
-    case "Active":
-      return vscode.ViewColumn.Active;
-    case "Beside":
-      return vscode.ViewColumn.Beside;
-    case "One":
-      return vscode.ViewColumn.One;
-    case "Two":
-      return vscode.ViewColumn.Two;
-    case "Three":
-      return vscode.ViewColumn.Three;
-    case "Four":
-      return vscode.ViewColumn.Four;
-    case "Five":
-      return vscode.ViewColumn.Five;
-    case "Six":
-      return vscode.ViewColumn.Six;
-    case "Seven":
-      return vscode.ViewColumn.Seven;
-    case "Eight":
-      return vscode.ViewColumn.Eight;
-    case "Nine":
-      return vscode.ViewColumn.Nine;
-    default:
-      return vscode.ViewColumn.Beside;
-  }
-};
