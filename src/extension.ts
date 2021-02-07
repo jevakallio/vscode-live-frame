@@ -20,6 +20,8 @@ export function activate(context: vscode.ExtensionContext) {
           title,
           column,
           {
+            enableCommandUris: true,
+            enableFindWidget: true,
             localResourceRoots: [],
             enableScripts: true,
           }

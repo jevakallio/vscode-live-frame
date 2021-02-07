@@ -15,6 +15,11 @@ export const renderHost = (url: string) => `
   </head>
   <body>
     <iframe src="${url}"></iframe>
+    <script>
+      window.addEventListener("message", (e) => {
+        window.dispatchEvent(new KeyboardEvent('keydown', JSON.parse(e.data)));
+      }, false);
+    </script>
   </body>
 </html>
 `;

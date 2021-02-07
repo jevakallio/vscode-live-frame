@@ -43,15 +43,60 @@ If you have a fast hot reloading setup, you can turn on VS Code's **Auto Save** 
 }
 ```
 
-## Questions
+## Known Limitations
+
+Because of the way **Live Frame** renders your site in an iframe-inside-webview, there are a couple of limitations.
+
+### Your site needs to be able to run in an iframe
+
+If your website prevents itself being loaded in an iframe e.g. via `X-Frame-Options` or `Content-Security-Policy`, it won't work inside Live Frame.
+
+This should not be an issue for most development setups, but if it is, try [VSCode Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) instead.
+
+### Dev tools work, but element selector doesn't
+
+You can open dev tools by running (`Cmd`+`Shift`+`P`) the `Open WebView Developer Tools` command. However,the point and click element selector doesn't select element inside the iframe.
+
+### Command key combinations (Copy, Paste, Select all...) are disabled
+
+This is a [known issue](https://github.com/microsoft/vscode/issues/65452) in VS Code.
+
+As a workaround, you can send your keystrokes to the extension using `postMessage`, and we'll forward them to VS Code for you. Just add the following somewhere in your application code:
+
+```js
+if (window.parent !== window) {
+  // If using TypeScript, next line should be:
+  // let listener = (e: KeyboardEvent) =>
+  let listener = (e) =>
+    window.parent.postMessage(
+      JSON.stringify({
+        altKey: e.altKey,
+        code: e.code,
+        ctrlKey: e.ctrlKey,
+        isComposing: e.isComposing,
+        key: e.key,
+        location: e.location,
+        metaKey: e.metaKey,
+        repeat: e.repeat,
+        shiftKey: e.shiftKey,
+      }),
+      "*"
+    );
+
+  if (!window.hasOwnProperty("keyhookInstalled")) {
+    // If using TypeScript, next line should be:
+    // (window as any).keyhookInstalled = true;
+    window.keyhookInstalled = true;
+    window.addEventListener("keydown", listener);
+  }
+}
+```
+
+## Infrequently Asked Questions
 
 ### Which bundlers, dev servers etc. does Live Frame support?
 
-All of them. Livereload, webpack, vite, servor, whatever angular people use... doesn't matter.
-
-### Can I use browser dev tools?
-
-Yes, run (`Cmd`+`Shift`+`P`) the `Open WebView Developer Tools` command.
+All of them. Livereload, webpack, vite, servor, whatever angular people use... shouldn't matter. If yours doesn't work, double check it's not your own fault, and [open an issue](https://github.com/jevakallio/vscode-live-frame/issues/new).
 
 ### Wait, didn't this exist before?
 
@@ -61,15 +106,15 @@ Sort of. [Browser Preview](https://marketplace.visualstudio.com/items?itemName=a
 
 ### So is this exactly like a regular Chrome environment?
 
-Not really. It's an embedded Electron webview, and I'm sure there are many minor differences to a full browser. Use at your own peril during development, not for acceptance testing!
+Not really. It's an embedded Electron webview with [known limitations](#known-limitations), and I'm sure many other minor differences to a full browser.
 
-### What if my website doesn't work in an iframe?
-
-**If your website prevents itself being loaded in an iframe e.g. via `X-Frame-Options` or `Content-Security-Policy`, it won't work inside Live Frame.**
-
-In that case, try [VSCode Browser Preview](https://marketplace.visualstudio.com/items?itemName=auchenberg.vscode-browser-preview) instead.
+Use at your own peril during development, not for acceptance testing!
 
 ## Release Notes
+
+### 0.1.1
+
+Add workaround for keyboard binding issue.
 
 ### 0.1.0
 
