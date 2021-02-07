@@ -1,10 +1,13 @@
 {
   "name": "vscode-live-frame",
-  "displayName": "VSCode Live Frame",
-  "description": "An iFrame for your IDE",
-  "version": "0.0.1",
+  "displayName": "Live Frame",
+  "publisher": "jevakallio",
+  "repository": "https://github.com/jevakallio/vscode-live-frame",
+  "description": "Live preview your web application inside VS Code",
+  "icon": "docs/icon-128.png",
+  "version": "0.1.0",
   "engines": {
-    "vscode": "^1.53.0"
+    "vscode": "^1.47.0"
   },
   "categories": [
     "Other"
@@ -75,7 +78,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.53.0",
+    "@types/vscode": "^1.47.0",
     "@types/glob": "^7.1.1",
     "@types/mocha": "^7.0.2",
     "@types/node": "^13.11.0",
