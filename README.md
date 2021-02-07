@@ -57,7 +57,7 @@ This should not be an issue for most development setups, but if it is, try [VSCo
 
 ### Dev tools work, but element selector doesn't
 
-You can open dev tools by running (`Cmd`+`Shift`+`P`) the `Open WebView Developer Tools` command. However,the point and click element selector doesn't select element inside the iframe.
+You can open dev tools by running (`Cmd`+`Shift`+`P`) the `Open WebView Developer Tools` command. However, the point and click element selector doesn't select element inside the iframe.
 
 ### Command key combinations (Copy, Paste, Select all...) are disabled
 
