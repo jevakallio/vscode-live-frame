@@ -25,22 +25,37 @@ Ajouter ces configuration dans le fichier de configuration de votre VS code ou v
   // Optionnel: Emplacement d'ouverture du panneau de preview
   "mtessFrwBacasable.pane": "Beside",
 
-  // Optionnel: Déploiement des skills IA (défaut: true)
-  "mtessFrwBacasable.deployAiSkills": true
+  // Optionnel: Déploiement des skills IA pour Claude Code (défaut: false)
+  "mtessFrwBacasable.deployAiSkills": false
 }
 ```
 
 ### Intégration avec les assistants IA
 
-L'extension déploie automatiquement au premier lancement les fichiers nécessaires pour que les assistants IA comprennent le projet :
+#### GitHub Copilot — intégré, rien à faire
 
-- **`CLAUDE.md`** et **`.claude/skills/`** — instructions et skill pour Claude Code
-- **`GEMINI.md`** et **`.gemini/settings.json`** — instructions et configuration MCP pour Gemini CLI
-- **`.mcp.json`** — configuration du serveur MCP partagée (autres clients MCP)
+Le skill **FRW** (génération et validation des fichiers `*.form.yml`, `*.bind.yml` et `*.transmission.yml`) est livré directement avec l'extension grâce au point de contribution `chatSkills` de VS Code. Dès l'installation, il est disponible dans le chat de Copilot : aucun fichier n'est ajouté à votre workspace et le skill se met à jour avec l'extension.
 
-Ces fichiers ne sont créés que s'ils sont absents, pour ne pas écraser vos personnalisations.
+#### Claude Code — sur demande
+
+Claude Code ne lit pas les skills fournis par une extension VS Code (il cherche dans `.claude/skills/`). Pour lui, l'extension peut copier le skill FRW dans votre workspace :
+
+- **`.claude/skills/frw/`** — le skill FRW et ses références
+- **`.mcp.json`** et **`.mtess/mcp/`** — l'outil de prévisualisation (serveur MCP), pour que Claude Code puisse afficher le rendu du formulaire
+- **`.claude/settings.json`** — autorisation de l'outil de prévisualisation, pour éviter une demande de permission à chaque appel
+
+Ce déploiement est **désactivé par défaut**. Deux façons de le faire :
+
+- activer le paramètre `mtessFrwBacasable.deployAiSkills` pour un déploiement automatique à l'ouverture du workspace;
+- ou lancer ponctuellement la commande **FRW - Initialiser le workspace pour Claude Code**.
+
+Les fichiers existants (`.mcp.json`, `.claude/settings.json`) sont complétés, jamais remplacés.
+
+#### Outil de prévisualisation
 
 L'extension expose également un **outil de langage** (`mtess-frw-bacasable_preview`) compatible avec tout assistant IA supportant l'API Language Model Tools de VS Code (Claude, GitHub Copilot, etc.) : l'assistant peut déclencher lui-même la prévisualisation dans le bac à sable après avoir modifié un formulaire.
+
+L'extension déclare aussi cet outil comme **serveur MCP** auprès de VS Code (`FRW bac à sable`), ce qui le rend disponible aux agents qui passent par MCP (par exemple Copilot CLI) sans aucun fichier dans le workspace.
 
 ### Outils de developpement
 

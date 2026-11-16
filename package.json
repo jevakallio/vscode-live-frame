@@ -5,7 +5,7 @@
   "repository": "https://github.com/MTESSDev/vscode-mtess-frw-bacasable",
   "description": "Configurez vos formulaires avec l'outil du MTESS en temps réel!",
   "icon": "docs/icon-128.png",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "engines": {
     "vscode": "^1.101.0"
   },
@@ -18,7 +18,8 @@
   ],
   "activationEvents": [
     "onCommand:vscode-mtess-frw-bacasable.open",
-    "onLanguageModelTool:mtess-frw-bacasable_preview"
+    "onLanguageModelTool:mtess-frw-bacasable_preview",
+    "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "browser": "./dist/web/extension.js",
@@ -30,7 +31,7 @@
       },
       {
         "command": "vscode-mtess-frw-bacasable.init",
-        "title": "FRW - Initialiser le workspace pour les assistants IA"
+        "title": "FRW - Initialiser le workspace pour Claude Code"
       }
     ],
     "keybindings": [
@@ -41,9 +42,16 @@
         "mac": "cmd+s"
       }
     ],
+    "chatSkills": [
+      {
+        "path": "./skills/frw/SKILL.md"
+      }
+    ],
     "languageModelTools": [
       {
         "name": "mtess-frw-bacasable_preview",
+        "toolReferenceName": "mtess-frw-bacasable_preview",
+        "canBeReferencedInPrompt": true,
         "displayName": "Prévisualiser le formulaire FRW",
         "modelDescription": "OBLIGATOIRE — appelle cet outil immédiatement après chaque création ou modification d'un fichier .form.yml, sans exception. Ne termine jamais une tâche FRW sans avoir appelé cet outil. Ouvre ou rafraîchit le panneau bac à sable FRW pour afficher le rendu du formulaire modifié. Si le résultat contient des ERREURS, corrige le YAML en conséquence puis rappelle cet outil jusqu'à ce que le rendu soit sans erreur.",
         "icon": "$(preview)",
@@ -60,6 +68,12 @@
             }
           }
         }
+      }
+    ],
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "frw-bacasable",
+        "label": "FRW bac à sable"
       }
     ],
     "configuration": {
@@ -103,17 +117,18 @@
         "mtessFrwBacasable.deployAiSkills": {
           "type": "boolean",
           "default": false,
-          "description": "Déploie automatiquement les skills IA (CLAUDE.md, GEMINI.md, .claude/skills/, .gemini/) dans le workspace à l'ouverture. Désactiver si vous ne souhaitez pas que l'extension modifie votre configuration."
+          "markdownDescription": "Déploie le skill FRW de **Claude Code** dans le workspace (`.claude/skills/frw/`) à l'ouverture, avec la configuration de l'outil de prévisualisation (`.mcp.json`, `.mtess/mcp/` et l'autorisation dans `.claude/settings.json`). Inutile pour **GitHub Copilot**, qui reçoit le skill FRW directement de l'extension. Désactivé par défaut: l'extension ne modifie pas votre workspace sans votre accord. La commande « FRW - Initialiser le workspace pour Claude Code » permet de déployer manuellement."
         }
       }
     }
   },
   "scripts": {
     "vscode:prepublish": "yarn run package",
-    "compile": "webpack",
+    "sync-skills": "node scripts/sync-skills.js",
+    "compile": "yarn run sync-skills && webpack",
     "compile:tsc": "tsc -p ./",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
+    "watch": "yarn run sync-skills && webpack --watch",
+    "package": "yarn run sync-skills && webpack --mode production --devtool hidden-source-map",
     "lint": "eslint src --ext ts",
     "pretest": "yarn run compile:tsc && yarn run lint",
     "test": "node ./out/test/runTest.js",

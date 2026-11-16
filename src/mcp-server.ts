@@ -6,6 +6,7 @@ import * as http from 'http';
 import * as https from 'https';
 
 function getBackendUrl(): string {
+  if (process.env.FRW_BACKEND_URL) { return process.env.FRW_BACKEND_URL; }
   const workspaceDir = process.cwd();
   try {
     const settingsPath = path.join(workspaceDir, '.vscode', 'settings.json');
@@ -131,7 +132,7 @@ async function handleToolCall(params: any): Promise<object> {
 
   // Write trigger file so the VS Code extension refreshes the webview
   const workspaceDir = process.cwd();
-  const triggerFile = path.join(workspaceDir, '.claude', '.frw-trigger');
+  const triggerFile = path.join(workspaceDir, '.mtess', '.frw-trigger');
   try {
     fs.mkdirSync(path.dirname(triggerFile), { recursive: true });
     const triggerContent = line !== undefined ? `${filePath}:${line}` : filePath;
